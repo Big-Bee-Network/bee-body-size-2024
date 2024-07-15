@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
-bee_info <- read.csv("/Users/lezelly/Desktop/Bee_Info.csv")
+bee_info <- read.csv("~/Desktop/Bee_Info.csv")
 
 head(bee_info)
 ```
