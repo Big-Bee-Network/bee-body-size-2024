@@ -14,6 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 bee_info <- read.csv("~/Desktop/Bee_Info.csv")
 
 head(bee_info)
+head(bee_info, 1)
 ```
 ```{r}
 library(dplyr)
@@ -32,7 +33,19 @@ MS_PinWeightAvg
 range(MS$DryWeight_g)
 
 Bee_weight <- MS$DryWeight_g - MS_PinWeightAvg
-head(Bee_weight)
+
+New_BeeInfo <- MS %>%
+  mutate(Bee_Weight = Bee_weight) %>%
+  filter(Pin_Name == "")
 ```
 
+```{r}
+species <- list("Melissodes communis", "Halictus ligatus", "Bombus impatiens", "Ptilothrix bombiformis", "Calliopsis andreniformis", "Parnurginus polytrichus", "Megachile mendica", "Xylcopa virginica", "Ceratina strenua", "Lasioglossum tegulare/puteulanum", "Halictus confusus", "Lasioglossum illinoense", "Lasioglossum hitchensi", "Lasioglossum imitatum", "Lasioglossum pruinosum", "Lasioglossum bruneri", "Lasioglossum callidum", "Lasioglossum trigeminum")
+```
+
+```{r}
+for (x in species){
+  filter(bee_info, Species == x)
+}
+```
 
