@@ -1,7 +1,7 @@
 ---
 #note
 title: "Tester"
-author: "Leslie Cervantes Rivera"
+author: "Leslie C."
 date: "2024-07-12"
 output: html_document
 ---
