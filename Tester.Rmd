@@ -13,30 +13,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 bee_info <- read.csv("~/Desktop/Bee_Info.csv")
 
-head(bee_info)
-head(bee_info, 1)
 ```
+
 ```{r}
 library(dplyr)
-#Only shows Melissodes communis
-MS <- filter(bee_info, Species == "Melissodes communis") 
 
-#Removes blank spaces in the Pin_Name column
-MS_PinWeight <- MS %>%
-  filter(Pin_Name != "")
-
-#Average weight of the pins
-MS_PinWeightAvg <- mean(MS_PinWeight$DryWeight_g)
-MS_PinWeightAvg
-
-#The range of the dry weight
-range(MS$DryWeight_g)
-
-Bee_weight <- MS$DryWeight_g - MS_PinWeightAvg
-
-New_BeeInfo <- MS %>%
-  mutate(Bee_Weight = Bee_weight) %>%
-  filter(Pin_Name == "")
 ```
 
 ```{r}
@@ -44,8 +25,44 @@ species <- list("Melissodes communis", "Halictus ligatus", "Bombus impatiens", "
 ```
 
 ```{r}
-for (x in species){
-  filter(bee_info, Species == x)
+library(dplyr)
+sp <- list("Megachile mendica", "Xylcopa virginica") #, "Halictus ligatus", "Bombus impatients"
+final_BeeWeight = data.frame()
+for(y in species){
+  filtered_species <- bee_info %>% filter(Species == y)
+  Pin_data <- filtered_species %>% filter(Pin_Name != "")
+  Pin_avg <- mean(Pin_data$DryWeight_g)
+  Bee_Weight <- filtered_species$DryWeight_g - Pin_avg
+  Updated_BeeWeight <- filtered_species %>%
+    mutate(BeeWeight_g = Bee_Weight)
+  
+  
+  final_BeeWeight <- bind_rows(final_BeeWeight, Updated_BeeWeight)
 }
+
+```
+```{r}
+#Extras
+#head(bee_info)
+#head(bee_info, 1)
+#Only shows Melissodes communis
+#MS <- filter(bee_info, Species == "Melissodes communis") 
+
+#Removes blank spaces in the Pin_Name column
+#MS_PinWeight <- MS %>%
+  #filter(Pin_Name != "")
+
+#Average weight of the pins
+#MS_PinWeightAvg <- mean(MS_PinWeight$DryWeight_g)
+#MS_PinWeightAvg
+
+#The range of the dry weight
+#range(MS$DryWeight_g)
+
+#Bee_weight <- MS$DryWeight_g - MS_PinWeightAvg
+
+#New_BeeInfo <- MS %>%
+  #mutate(Bee_Weight = Bee_weight) %>%
+  #filter(Pin_Name == "")
 ```
 
